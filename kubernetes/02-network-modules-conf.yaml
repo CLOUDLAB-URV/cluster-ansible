@@ -20,3 +20,6 @@
       mode: u=rw,g=r,o=r
   - name: Apply sysctl params without reboot
     shell: sysctl --system
+  - name: rebooting all nodes
+    reboot:
+
