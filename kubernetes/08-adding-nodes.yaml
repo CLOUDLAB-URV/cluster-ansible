@@ -5,4 +5,4 @@
   tasks:
 
   - name: Joining worker node
-    shell: kubeadm join ...
+    shell: kubeadm join 

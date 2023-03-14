@@ -9,6 +9,3 @@
       path: /etc/fstab
       regexp: '^/swap.img'
       replace: '#/swap.img'
-  
-  - name: rebooting all nodes
-    reboot:
