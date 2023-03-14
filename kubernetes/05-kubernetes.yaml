@@ -1,0 +1,36 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: apt update and installation of basic packages
+    apt:
+      pkg:
+      - apt-transport-https
+      - curl
+      - ca-certificates
+      update_cache: yes
+  - name: Download the Google Cloud public signing key
+    shell: curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  - name: Add the Kubernetes apt repository
+    shell: echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+  - name: Update apt package index, install kubelet, kubeadm and kubectl
+    apt:
+      pkg:
+      - kubelet
+      - kubeadm
+      - kubectl
+      update_cache: yes
+  - name: pin kubelet version
+    dpkg_selections:
+      name: kubelet
+      selection: hold
+  - name: pin kubeadm version
+    dpkg_selections:
+      name: kubeadm
+      selection: hold
+  - name: pin kubectl version
+    dpkg_selections:
+      name: kubectl
+      selection: hold
