@@ -1,4 +1,4 @@
-copy-public-key.sh
 ansible.cfg
-inventory
 kubernetes-out
+copy-public-key.sh
+host-add-on

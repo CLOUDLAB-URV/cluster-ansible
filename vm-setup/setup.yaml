@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: change the hostname of the host
+    shell: echo "{{ inventory_hostname }}" > /etc/hostname
+  - name: copying hostnames of the cluster to the /tmp
+    copy:
+      src: '{{ conf_path }}/host-add-on'
+      dest: /tmp
+  - name: change the hostname of the host
+    shell: cat /tmp/host-add-on >> /etc/hosts
+  - name: removing the temporal file
+    file: 
+      path: /tmp/host-add-on
+      state: absent
+  - name: rebooting all nodes
+    reboot:
