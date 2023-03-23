@@ -2,3 +2,4 @@ ansible.cfg
 kubernetes-out
 copy-public-key.sh
 host-add-on
+minio/conf/minio

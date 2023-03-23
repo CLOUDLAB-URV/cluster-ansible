@@ -1,0 +1,45 @@
+---
+
+- hosts: storage
+  become: true
+  tasks:
+
+  - name: downloading the minio .deb file into /tmp
+    get_url: 
+      url: https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20230313194617.0.0_amd64.deb
+      dest: /tmp/minio.deb
+  - name: installing the deb package
+    apt: 
+      deb: /tmp/minio.deb
+  - name: removing them minio deb package 
+    file: 
+      path: /tmp/minio.deb
+      state: absent
+  - name: setting the minio group
+    group: 
+      name: minio-user
+      system: true
+  - name: creating the user and adding it to the group
+    user: 
+      name: minio-user
+      create_home: false
+      system: true
+      group: minio-user
+  - name: creating the directory for storing minio files
+    file: 
+      path: /mnt/disk1
+      state: directory
+      owner: minio-user
+      group: minio-user
+  - name: copying minio config file to /etc/default
+    copy:
+      src: '{{ conf_path }}/minio'
+      dest: /etc/default/minio
+      owner: minio-user
+      group: minio-user
+      mode: '0660'
+  - name: starting the minio service and anabling it
+    service: 
+      name: minio
+      state: started
+      enabled: yes

@@ -1,0 +1,5 @@
+[all:vars]
+conf_path=/home/joan/cluster-ansible/minio/conf
+
+[storage]
+minio
