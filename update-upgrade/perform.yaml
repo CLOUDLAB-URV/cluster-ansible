@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: performing apt update and upgrade-safe
+    apt: 
+      update_cache: yes
+      upgrade: safe
+  - name: rebooting all nodes
+    reboot:

@@ -1,0 +1,12 @@
+[master]
+master-kubernetes  
+
+[workers]
+worker-kubernetes1 
+worker-kubernetes2 
+
+[storage]
+minio
+
+[client]
+lithops-client	   
